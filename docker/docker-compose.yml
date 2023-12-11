@@ -18,6 +18,8 @@ services:
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
+      - ./private-key.pem:/usr/private-key.pem
+      - ./public-certificate.pem:/usr/public-certificate.pem
     env_file:
       - .env
     ports:

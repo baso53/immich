@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { json } from 'body-parser';
 import cookieParser from 'cookie-parser';
+import fs from 'fs'
 import { AppModule } from './app.module';
 import { indexFallback, useSwagger } from './app.utils';
 
@@ -12,7 +13,11 @@ const logger = new Logger('ImmichServer');
 const port = Number(process.env.SERVER_PORT) || 3001;
 
 export async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: getLogLevels() });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { httpsOptions: {
+    key: fs.readFileSync('/usr/private-key.pem'),
+    cert: fs.readFileSync('/usr/public-certificate.pem')
+  },
+   logger: getLogLevels() });
 
   app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
   app.set('etag', 'strong');

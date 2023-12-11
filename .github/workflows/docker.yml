@@ -25,14 +25,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - context: "machine-learning"
-            file: "machine-learning/Dockerfile"
-            image: "immich-machine-learning"
-            platforms: "linux/amd64,linux/arm64"
           - context: "."
             file: "server/Dockerfile"
             image: "immich-server"
-            platforms: "linux/arm64,linux/amd64"
+            platforms: "linux/arm64"
 
     steps:
       - name: Checkout
